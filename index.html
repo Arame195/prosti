@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <meta name="theme-color" content="#10070d">
+
+  <title>Для тебя ❤️</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #10070d;
+      --cream: #fff1e9;
+      --rose: #f4a1b6;
+      --red: #c52d54;
+      --gold: #f1d0ad;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--cream);
+      background: var(--bg);
+      font-family: "Manrope", sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0.12;
+
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E");
+    }
+
+    button {
+      font: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 5px;
+    }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 40%,
+          rgba(112, 23, 57, .38),
+          transparent 65%),
+        linear-gradient(160deg, #10070d, #1d0a15 60%, #10070d);
+    }
+
+    .ambient__glow {
+      position: absolute;
+      width: 80vw;
+      height: 80vw;
+      max-width: 700px;
+      max-height: 700px;
+      left: 50%;
+      top: 50%;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+
+      background: radial-gradient(circle,
+          rgba(202, 48, 91, .19),
+          rgba(202, 48, 91, .04) 42%,
+          transparent 70%);
+
+      filter: blur(30px);
+    }
+
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    main {
+      position: relative;
+      min-height: 100svh;
+    }
+
+    .story {
+      display: none;
+      position: relative;
+      min-height: 100svh;
+      padding:
+        max(48px, env(safe-area-inset-top)) 24px max(48px, env(safe-area-inset-bottom));
+
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .story.is-active {
+      display: flex;
+    }
+
+    .content {
+      width: min(100%, 540px);
+      margin: auto;
+    }
+
+    .eyebrow {
+      color: var(--rose);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      margin-bottom: 27px;
+    }
+
+    h1,
+    h2 {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 400;
+      line-height: 1.03;
+      letter-spacing: -.035em;
+      margin: 0;
+      text-wrap: balance;
+    }
+
+    h1 {
+      font-size: clamp(58px, 13vw, 94px);
+    }
+
+    h2 {
+      font-size: clamp(43px, 10vw, 68px);
+      margin-bottom: 27px;
+    }
+
+    .accent {
+      color: var(--rose);
+      font-style: italic;
+    }
+
+    .description {
+      max-width: 390px;
+      margin: 26px auto 0;
+      color: rgba(255, 241, 233, .72);
+      font-size: 14px;
+      line-height: 1.95;
+      font-weight: 300;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 38px;
+    }
+
+    .button {
+      position: relative;
+      min-height: 54px;
+      min-width: 190px;
+      padding: 15px 25px;
+      border: 1px solid rgba(244, 161, 182, .48);
+      border-radius: 100px;
+      color: var(--cream);
+      background: rgba(197, 45, 84, .14);
+      cursor: pointer;
+      overflow: hidden;
+
+      transition:
+        border-color .3s ease,
+        background .3s ease,
+        transform .3s ease;
+    }
+
+    .button::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg,
+          transparent 20%,
+          rgba(255, 255, 255, .13) 48%,
+          transparent 75%);
+      transform: translateX(-120%);
+      transition: transform .7s ease;
+    }
+
+    .button:hover::before {
+      transform: translateX(120%);
+    }
+
+    .button:hover {
+      border-color: var(--rose);
+      background: rgba(197, 45, 84, .25);
+    }
+
+    .button:active {
+      transform: scale(.97);
+    }
+
+    .button--primary {
+      color: #2a1019;
+      border: 0;
+      background: linear-gradient(120deg, #f7c5ce, #e58ca4);
+      box-shadow: 0 8px 35px rgba(197, 45, 84, .18);
+    }
+
+    .button--primary:hover {
+      background: linear-gradient(120deg, #ffdae0, #f0a3b7);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      width: 160px;
+      margin: 29px auto;
+      color: var(--rose);
+      font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: rgba(244, 161, 182, .35);
+    }
+
+    .letter {
+      color: rgba(255, 241, 233, .84);
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(22px, 5vw, 27px);
+      line-height: 1.55;
+      font-weight: 400;
+    }
+
+    .letter p {
+      margin: 0 0 20px;
+    }
+
+    .letter p:last-child {
+      margin-bottom: 0;
+    }
+
+    .photo-frame {
+      position: relative;
+      width: min(72vw, 310px);
+      margin: 0 auto 34px;
+      aspect-ratio: 4 / 5;
+      padding: 8px;
+
+      border: 1px solid rgba(244, 161, 182, .58);
+      border-radius: 160px 160px 22px 22px;
+
+      background: linear-gradient(145deg,
+          rgba(255, 255, 255, .15),
+          rgba(197, 45, 84, .05));
+
+      box-shadow:
+        0 0 45px rgba(197, 45, 84, .12),
+        inset 0 0 25px rgba(255, 255, 255, .03);
+    }
+
+    .photo-frame::before {
+      content: "";
+      position: absolute;
+      inset: -9px;
+      border: 1px solid rgba(244, 161, 182, .15);
+      border-radius: 170px 170px 29px 29px;
+      pointer-events: none;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: 155px 155px 17px 17px;
+      background: linear-gradient(145deg, #391322, #170912);
+    }
+
+    .photo-placeholder {
+      position: absolute;
+      inset: 8px;
+      display: grid;
+      place-items: center;
+      color: rgba(255, 241, 233, .7);
+      font-size: 12px;
+      letter-spacing: .12em;
+      pointer-events: none;
+    }
+
+    .photo-frame.has-photo .photo-placeholder {
+      display: none;
+    }
+
+    .final-title {
+      margin-bottom: 15px;
+    }
+
+    .final-description {
+      margin-top: 15px;
+    }
+
+    .answer-buttons {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .answer-buttons .button {
+      min-width: 130px;
+    }
+
+    .final-note {
+      min-height: 30px;
+      margin-top: 25px;
+      color: var(--rose);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .signature {
+      margin-top: 34px;
+      color: rgba(244, 161, 182, .8);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 24px;
+      font-style: italic;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (min-width: 700px) {
+      .story {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+
+      .description {
+        font-size: 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="ambient">
+    <div class="ambient__glow"></div>
+  </div>
+
+  <canvas id="particles"></canvas>
+
+  <main>
+
+    <!-- 1. INTRO -->
+
+    <section class="story is-active" id="intro">
+      <div class="content">
+
+        <h1 class="intro-title">
+          Для тебя<br><span class="accent">Принцесса.</span>
+        </h1>
+
+        <div class="divider intro-divider">♥</div>
+
+        <p class="description intro-copy">
+          Есть кое-что, что я хочу тебе рассказать.
+          На этот раз — абсолютно честно.
+        </p>
+
+        <p class="description intro-copy">
+          Сегодня у меня было много мыслей, и мне хотелось хоть немного привести их в порядок. Поэтому я решил заняться
+          тем, что умею и что помогает мне выразить свои чувства, — программированием.
+        </p>
+
+        <p class="description intro-copy">
+          И мне захотелось создать для тебя кое-что особенное. ❤️
+        </p>
+
+        <div class="actions">
+          <button class="button button--primary" id="startButton">
+            Прочитать <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 2. THE TRUTH -->
+
+    <section class="story" id="truth">
+      <div class="content">
+
+        <h2 class="section-title">
+          Как всё<br>
+          <span class="accent">началось</span>
+        </h2>
+
+        <div class="letter">
+          <p class="reveal-line">
+            Всё началось с того, что мне скинули твой юз и я увидел твою фотку. Ты мне понравилась очень сильно. ДА.
+            Поступил не правильно и надо было мне не слушать никого и сказать тебе все так, как подсказал мне сердце. Ну
+            да, Было страшно, что ты будешь отшивать, твоя красота просто выключила мой мозг и я не понимал, что я
+            делаю. Прости меня пожалуйста
+          </p>
+
+          <p class="reveal-line">
+            У меня есть только ты, и я очень боюсь тебя потерять)
+          </p>
+        </div>
+
+        <div class="actions">
+          <button class="button next-button" data-next="feelings">
+            Продолжить <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 3. FEELINGS -->
+
+    <section class="story" id="feelings">
+      <div class="content">
+
+        <div class="photo-frame reveal-photo" id="firstPhotoFrame">
+          <img src="IMG_2455.JPG" alt="" onload="this.parentElement.classList.add('has-photo')"
+            onerror="this.style.display='none'">
+
+          <div class="photo-placeholder">
+            YOUR PHOTO ♡
+          </div>
+        </div>
+
+        <h2 class="section-title">
+          Ты стала<br>
+          <span class="accent">особенной</span>
+        </h2>
+
+        <div class="letter">
+          <p class="reveal-line">
+            Знаешь ты мне подарила кое-что особенное.
+          </p>
+
+          <p class="reveal-line">
+            У меня появилось желание просыпаться пораньше, чтобы увидеть твое сообщение. Ты всегда этими сообщениями
+            поднимала мне настроение даже тогда когда я был в плохом состоянии или не хотел ничего делать вообще, даже
+            если ты этого не замечала.
+          </p>
+
+          <p class="reveal-line">
+            Всегда когда я хотел побывать одному, когда не было настроения я даже тогда хотел все равно видеть тебя или
+            услышать твой голос.
+          </p>
+
+          <p class="reveal-line">
+            а помнишь, что даже 21.000 сердечек не смогли передать всю твою красоту?))
+          </p>
+        </div>
+
+        <div class="actions">
+          <button class="button next-button" data-next="final">
+            Ещё кое-что… <span aria-hidden="true">♡</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 4. FINAL -->
+
+    <section class="story" id="final">
+      <div class="content">
+
+        <div class="photo-frame final-photo" id="finalPhotoFrame">
+          <img src="IMG_2455.JPG" alt="Фотография" onload="this.parentElement.classList.add('has-photo')"
+            onerror="this.style.display='none'">
+
+          <div class="photo-placeholder">
+            FOR YOU ♡
+          </div>
+        </div>
+
+        <h2 class="final-title">
+          Можно начать<br>
+          <span class="accent">сначала?</span>
+        </h2>
+
+        <p class="description final-description">
+          Я хочу вернуть все назад, хочу опять чувствовать тепло в нашем чате. я понял свою ошибку, прости своего
+          дурачка пожалуйста))
+        </p>
+
+        <div class="divider">♥</div>
+
+        <p class="letter">
+          Ты простишь меня?
+        </p>
+
+        <div class="answer-buttons" id="answerButtons">
+          <button class="button button--primary" id="yesButton">
+            Да ❤️
+          </button>
+
+          <button class="button" id="noButton">
+            Нет
+          </button>
+
+          <button class="button button--primary" id="maybeButton">
+            Походу да ❤️
+          </button>
+        </div>
+
+        <div class="final-note" id="finalNote" aria-live="polite"></div>
+
+        <div class="signature">
+          С теплом, от всего сердца для своей Принцессы)
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- GSAP -->
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+
+  <script>
+    const $ = (selector, root = document) =>
+      root.querySelector(selector);
+
+    const $$ = (selector, root = document) =>
+      [...root.querySelectorAll(selector)];
+
+    const sections = $$(".story");
+
+    let currentSection = "intro";
+    let isTransitioning = false;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    // ------------------------------------
+    // ATMOSPHERIC PARTICLES
+    // ------------------------------------
+
+    const canvas = $("#particles");
+    const ctx = canvas.getContext("2d");
+
+    let particles = [];
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    let animationFrame = 0;
+
+    function resizeCanvas() {
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+
+      width = window.innerWidth;
+      height = window.innerHeight;
+
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const amount = Math.min(
+        55,
+        Math.max(22, Math.round(width / 8))
+      );
+
+      particles = Array.from({ length: amount }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.8 + .4,
+        speed: Math.random() * .22 + .06,
+        drift: (Math.random() - .5) * .22,
+        alpha: Math.random() * .45 + .12,
+        phase: Math.random() * Math.PI * 2
+      }));
+    }
+
+    function drawParticles(time = 0) {
+      ctx.clearRect(0, 0, width, height);
+
+      particles.forEach(p => {
+        p.y -= p.speed;
+        p.x += p.drift;
+
+        if (p.y < -5) {
+          p.y = height + 5;
+          p.x = Math.random() * width;
+        }
+
+        if (p.x < -5) p.x = width + 5;
+        if (p.x > width + 5) p.x = -5;
+
+        const pulse = reducedMotion
+          ? 1
+          : .72 + Math.sin(time * .001 + p.phase) * .28;
+
+        ctx.beginPath();
+
+        ctx.fillStyle =
+          `rgba(255, 180, 199, ${p.alpha * pulse})`;
+
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = "rgba(235, 78, 124, .6)";
+
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.shadowBlur = 0;
+
+      if (!reducedMotion) {
+        animationFrame = requestAnimationFrame(drawParticles);
+      }
+    }
+
+    resizeCanvas();
+    drawParticles();
+
+    window.addEventListener("resize", resizeCanvas);
+
+
+    // ------------------------------------
+    // SECTION TRANSITIONS
+    // ------------------------------------
+
+    function animateIn(sectionId) {
+      const section = $("#" + sectionId);
+      const content = $(".content", section);
+
+      if (reducedMotion) {
+        gsap.set(content, { clearProps: "all" });
+        return;
+      }
+
+      const tl = gsap.timeline();
+
+      tl.fromTo(
+        content,
+        {
+          autoAlpha: 0,
+          y: 28,
+          scale: .985
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: .9,
+          ease: "power3.out"
+        }
+      );
+
+      const title = $(".section-title, .intro-title, .final-title", section);
+
+      if (title) {
+        tl.from(
+          title,
+          {
+            y: 24,
+            autoAlpha: 0,
+            duration: .8,
+            ease: "power3.out"
+          },
+          "-=.55"
+        );
+      }
+
+      const lines = $$(".reveal-line", section);
+
+      if (lines.length) {
+        tl.from(
+          lines,
+          {
+            y: 18,
+            autoAlpha: 0,
+            duration: .8,
+            stagger: .24,
+            ease: "power2.out"
+          },
+          "-=.35"
+        );
+      }
+
+      const photo = $(".photo-frame", section);
+
+      if (photo) {
+        tl.from(
+          photo,
+          {
+            y: 30,
+            scale: .92,
+            autoAlpha: 0,
+            duration: 1.15,
+            ease: "power3.out"
+          },
+          "-=.45"
+        );
+
+        gsap.to(photo, {
+          y: -5,
+          duration: 3.2,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1
+        });
+      }
+
+      const actions = $(".actions, .answer-buttons", section);
+
+      if (actions) {
+        tl.from(
+          actions,
+          {
+            y: 12,
+            autoAlpha: 0,
+            duration: .65,
+            ease: "power2.out"
+          },
+          "-=.25"
+        );
+      }
+    }
+
+    function goToSection(nextId) {
+      if (isTransitioning || nextId === currentSection) return;
+
+      const next = $("#" + nextId);
+      const current = $("#" + currentSection);
+
+      if (!next || !current) return;
+
+      isTransitioning = true;
+
+      if (reducedMotion) {
+        current.classList.remove("is-active");
+        next.classList.add("is-active");
+
+        currentSection = nextId;
+        animateIn(nextId);
+        isTransitioning = false;
+
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          currentSection = nextId;
+          isTransitioning = false;
+          window.scrollTo(0, 0);
+        }
+      });
+
+      tl.to(current, {
+        autoAlpha: 0,
+        scale: .985,
+        filter: "blur(5px)",
+        duration: .35,
+        ease: "power2.in"
+      });
+
+      tl.add(() => {
+        current.classList.remove("is-active");
+
+        gsap.set(current, {
+          clearProps: "all"
+        });
+
+        next.classList.add("is-active");
+
+        gsap.set(next, {
+          autoAlpha: 1,
+          clearProps: "all"
+        });
+      });
+
+      tl.fromTo(
+        next,
+        {
+          autoAlpha: 0,
+          scale: 1.015,
+          filter: "blur(7px)"
+        },
+        {
+          autoAlpha: 1,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: .75,
+          ease: "power3.out"
+        }
+      );
+
+      tl.add(() => {
+        animateIn(nextId);
+      }, "-=.45");
+    }
+
+
+    // ------------------------------------
+    // INTRO
+    // ------------------------------------
+
+    if (!reducedMotion) {
+      const intro = gsap.timeline({
+        delay: .15
+      });
+
+      intro
+        .from(".intro-title", {
+          y: 35,
+          autoAlpha: 0,
+          duration: 1.3,
+          ease: "power3.out"
+        })
+        .from(".intro-divider", {
+          scaleX: 0,
+          autoAlpha: 0,
+          duration: .7,
+          ease: "power2.out"
+        }, "-=.6")
+        .from(".intro-copy", {
+          y: 18,
+          autoAlpha: 0,
+          duration: .9,
+          ease: "power2.out"
+        }, "-=.35")
+        .from(".intro-title .accent", {
+          color: "#fff1e9",
+          duration: 1.2,
+          ease: "sine.inOut"
+        }, "-=.5")
+        .from("#startButton", {
+          y: 12,
+          autoAlpha: 0,
+          duration: .7
+        }, "-=.4");
+
+      gsap.to(".ambient__glow", {
+        scale: 1.2,
+        opacity: .75,
+        duration: 4,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      });
+    }
+
+    $("#startButton").addEventListener("click", () => {
+      goToSection("truth");
+    });
+
+    $$(".next-button").forEach(button => {
+      button.addEventListener("click", () => {
+        goToSection(button.dataset.next);
+      });
+    });
+
+
+    // ------------------------------------
+    // HEART BURST
+    // ------------------------------------
+
+    function heartBurst() {
+      const symbols = ["♥", "♡", "✦", "♥", "✧"];
+      const colors = ["#f4a1b6", "#ffd7df", "#f1d0ad"];
+
+      for (let i = 0; i < 34; i++) {
+        const heart = document.createElement("span");
+
+        heart.textContent =
+          symbols[Math.floor(Math.random() * symbols.length)];
+
+        Object.assign(heart.style, {
+          position: "fixed",
+          left: "50%",
+          top: "48%",
+          zIndex: "20",
+          pointerEvents: "none",
+          fontSize: `${Math.random() * 18 + 10}px`,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+
+        document.body.appendChild(heart);
+
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 70 + Math.random() * Math.min(width * .42, 220);
+
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+
+        if (reducedMotion) {
+          heart.remove();
+          continue;
+        }
+
+        gsap.fromTo(
+          heart,
+          {
+            x: 0,
+            y: 0,
+            scale: .3,
+            opacity: 0
+          },
+          {
+            x,
+            y,
+            scale: .8 + Math.random() * .8,
+            opacity: 1,
+            duration: .3,
+            ease: "power2.out"
+          }
+        );
+
+        gsap.to(heart, {
+          y: y - 100 - Math.random() * 100,
+          x: x + (Math.random() - .5) * 90,
+          rotation: Math.random() * 100 - 50,
+          opacity: 0,
+          scale: .3,
+          duration: 1.8 + Math.random() * 1.5,
+          delay: .25,
+          ease: "power2.in",
+          onComplete: () => heart.remove()
+        });
+      }
+    }
+
+
+    // ------------------------------------
+    // FINAL ANSWER
+    // ------------------------------------
+
+    const finalNote = $("#finalNote");
+    const yesButton = $("#yesButton");
+    const noButton = $("#noButton");
+    const maybeButton = $("#maybeButton");
+
+    // ВСТАВЬ СЮДА URL СВОЕГО НОВОГО WORKER
+    const WORKER_URL = "https://old-dawn-7c80.rwgjsrz5pk.workers.dev";
+
+    const answerButtons = [yesButton, noButton, maybeButton];
+
+    function showFinalNote(message) {
+      finalNote.textContent = message;
+
+      gsap.fromTo(
+        finalNote,
+        { autoAlpha: 0, y: 10 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power2.out"
+        }
+      );
+    }
+
+    async function sendAnswer(answer) {
+      // Не допускаем повторные нажатия, пока идёт запрос
+      answerButtons.forEach(button => {
+        button.disabled = true;
+      });
+
+      showFinalNote("Отправляю ответ… ❤️");
+
+      try {
+        const response = await fetch(WORKER_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ answer })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.ok) {
+          throw new Error("Не удалось отправить ответ");
+        }
+
+        if (answer === "yes") {
+          showFinalNote("Спасибо, что прочитала моё письмо. ❤️");
+          heartBurst();
+        } else if (answer === "no") {
+          showFinalNote(
+            "Я понимаю и уважаю твои чувства. Спасибо, что прочитала. ❤️"
+          );
+        } else {
+          showFinalNote(
+            "Спасибо за твой ответ. ❤️"
+          );
+          heartBurst();
+        }
+      } catch (error) {
+        showFinalNote(
+          "Не получилось отправить ответ. Попробуй ещё раз немного позже. ❤️"
+        );
+
+        // Если отправка не удалась, разрешаем повторить попытку
+        answerButtons.forEach(button => {
+          button.disabled = false;
+        });
+      }
+    }
+
+    yesButton.addEventListener("click", () => {
+      sendAnswer("yes");
+    });
+
+    noButton.addEventListener("click", () => {
+      sendAnswer("no");
+    });
+
+    maybeButton.addEventListener("click", () => {
+      sendAnswer("maybe");
+    });
+
+
+    // Keep the initial state visible until the intro timeline runs.
+    gsap.set("#intro .content", {
+      autoAlpha: 1
+    });
+  </script>
+
+</body>
+
+</html>
